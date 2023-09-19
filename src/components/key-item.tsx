@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Action, ActionPanel, List } from "@raycast/api";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
 
 import { KeyEnum, getKey } from "../utils/generator";
 
@@ -22,9 +22,15 @@ export default function KeyItem({ type, reloadAll }: Props) {
       actions={
         <ActionPanel>
           <Action.CopyToClipboard title="Copy Key" content={value} />
-          <Action title="Generate New Key" shortcut={{ modifiers: ["cmd"], key: "r" }} onAction={reload} />
+          <Action
+            icon={Icon.ArrowClockwise}
+            title="Reload Key"
+            shortcut={{ modifiers: ["cmd"], key: "r" }}
+            onAction={reload}
+          />
           <ActionPanel.Section>
             <Action
+              icon={Icon.ArrowClockwise}
               title="Reload All Keys"
               shortcut={{ modifiers: ["cmd", "shift"], key: "enter" }}
               onAction={reloadAll}

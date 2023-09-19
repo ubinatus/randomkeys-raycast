@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { List } from "@raycast/api";
 
+import { KeyEnum } from "./utils/generator";
 import KeyItem from "./components/key-item";
 import { keySections } from "./utils/constants";
+import KeyDropdown from "./components/key-dropdown";
 
 export default function Generate() {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedType, setSelectedType] = useState<KeyEnum | "all">("all");
 
   function reloadAll() {
     setIsLoading(true);
@@ -15,23 +18,24 @@ export default function Generate() {
     }, 500);
   }
 
+  const { filteredSections, keys } = useMemo(() => {
+    const showAll = selectedType === "all";
+    const sections = keySections.filter((section) => showAll || section.type === selectedType);
+    return {
+      filteredSections: sections,
+      keys: new Array(showAll ? 1 : 6).fill(0),
+    };
+  }, [selectedType]);
+
   return (
-    <List
-      isLoading={isLoading}
-      filtering={false}
-      searchBarAccessory={
-        <List.Dropdown tooltip="Dropdown With Items">
-          <List.Dropdown.Item title="One" value="one" />
-          <List.Dropdown.Item title="Two" value="two" />
-          <List.Dropdown.Item title="Three" value="three" />
-        </List.Dropdown>
-      }
-    >
+    <List isLoading={isLoading} filtering={false} searchBarAccessory={<KeyDropdown onChange={setSelectedType} />}>
       {isLoading
         ? []
-        : keySections.map((section) => (
+        : filteredSections.map((section) => (
             <List.Section key={section.title} title={section.title} subtitle={section.description}>
-              <KeyItem type={section.type} reloadAll={reloadAll} />
+              {keys.map((_, keyIdx) => (
+                <KeyItem key={keyIdx} type={section.type} reloadAll={reloadAll} />
+              ))}
             </List.Section>
           ))}
     </List>

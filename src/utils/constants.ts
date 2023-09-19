@@ -1,6 +1,12 @@
 import { KeyEnum } from "./generator";
 
-export const keySections = [
+export type KeySection = {
+  title: string;
+  description: string;
+  type: KeyEnum;
+};
+
+export const keySections: KeySection[] = [
   {
     title: "Memorable Passwords",
     description: "Decently secure passwords. Balanced for memorability and security. Suitable for daily use.",
@@ -14,7 +20,7 @@ export const keySections = [
   {
     title: "Fort Knox Passwords",
     description: "Ultimate level of security. Complex and lengthy. Ideal for protecting highly confidential data.",
-    type: KeyEnum.strong,
+    type: KeyEnum.ft_knox,
   },
   {
     title: "CodeIgniter Encryption Keys",

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Action, ActionPanel, List } from "@raycast/api";
 
-import { KeyEnum, getKey } from "../utils/key-gen";
+import { KeyEnum, getKey } from "../utils/generator";
 
 type Props = {
   type: KeyEnum;

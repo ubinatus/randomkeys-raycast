@@ -1,4 +1,4 @@
-import { KeyEnum } from "./key-gen";
+import { KeyEnum } from "./generator";
 
 export const keySections = [
   {
